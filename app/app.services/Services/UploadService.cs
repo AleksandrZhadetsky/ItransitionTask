@@ -1,7 +1,9 @@
 ﻿using app.data_access.Data;
 using app.data_access.Models;
 using app.services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace app.services.Services
@@ -17,9 +19,9 @@ namespace app.services.Services
 
         public async Task HandleFileUploadAsync(UploadRequest request, string pathToUploadFolder)
         {
-            //var userId = (await _userManager.Users.Where(u => u.UserName == request.UserName).FirstOrDefaultAsync()).Id;  TODO: REPLACE WITH USER_ID
+            var userId = (await _dbContext.Users.Where(u => u.UserName == request.UserName).FirstOrDefaultAsync()).Id;
             var imageCategory = request.Category;
-            var dbImage = new Image { Path = pathToUploadFolder, UserId = request.UserName, UploadDate = DateTime.Now, Category = imageCategory };
+            var dbImage = new Image { Path = pathToUploadFolder, UserId = userId, UploadDate = DateTime.Now, Category = imageCategory };
             _dbContext.Images.Add(dbImage);
             await _dbContext.SaveChangesAsync();
         }
