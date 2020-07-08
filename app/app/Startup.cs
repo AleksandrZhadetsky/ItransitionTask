@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using app.data_access.Data;
 using app.data_access.Models;
+using app.services.Interfaces;
+using app.services.Services;
 
 namespace app
 {
@@ -48,6 +50,8 @@ namespace app
                 .AddIdentityServerJwt();
 
             services.AddControllersWithViews();
+
+            services.AddTransient<IUploadService, UploadService>();
 
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
