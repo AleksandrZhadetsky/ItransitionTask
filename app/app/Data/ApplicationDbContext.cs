@@ -17,5 +17,7 @@ namespace app.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        //public DbSet<Image> Images { get; set; }
     }
 }
