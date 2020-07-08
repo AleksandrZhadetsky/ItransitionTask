@@ -1,4 +1,4 @@
-﻿namespace app.Models
+﻿namespace app.data_access.Models
 {
     public enum Category
     {

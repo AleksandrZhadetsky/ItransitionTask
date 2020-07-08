@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace app.Models
+namespace app.data_access.Models
 {
     public class Image
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Path { get; set; }
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }

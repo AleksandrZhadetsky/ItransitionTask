@@ -1,14 +1,10 @@
-﻿using app.Models;
+﻿using app.data_access.Models;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace app.Data
+namespace app.data_access.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
@@ -18,6 +14,6 @@ namespace app.Data
         {
         }
 
-        //public DbSet<Image> Images { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }

@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
-using app.Data;
-using app.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http.Features;
+using app.data_access.Data;
+using app.data_access.Models;
 
 namespace app
 {
@@ -56,11 +56,12 @@ namespace app
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            //services.Configure<FormOptions>(o => {
-            //    o.ValueLengthLimit = int.MaxValue;
-            //    o.MultipartBodyLengthLimit = int.MaxValue;
-            //    o.MemoryBufferThreshold = int.MaxValue;
-            //});
+            services.Configure<FormOptions>(o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
