@@ -5,6 +5,6 @@ namespace app.services.Interfaces
 {
     public interface IUploadService
     {
-        Task HandleFileUploadAsync(UploadRequest request, string pathToUploadFolder);
+        Task HandleFileUploadAsync(UploadRequest request);
     }
 }

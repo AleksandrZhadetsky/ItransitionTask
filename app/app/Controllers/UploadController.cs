@@ -16,13 +16,11 @@ namespace app.Controllers
         private const int CategoryItems = 10;
         private const int DefaultCategory = 9;
 
-        private IWebHostEnvironment _hostingEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
         private IUploadService _uploadService;
 
-        public UploadController(IWebHostEnvironment hostingEnvironment, UserManager<ApplicationUser> userManager, IUploadService uploadService)
+        public UploadController(UserManager<ApplicationUser> userManager, IUploadService uploadService)
         {
-            _hostingEnvironment = hostingEnvironment;
             _userManager = userManager;
             _uploadService = uploadService;
         }
@@ -32,14 +30,7 @@ namespace app.Controllers
         {
             try
             {
-                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
-                string uniqueFileName = Guid.NewGuid().ToString() + "_" + request.UploadedFile.FileName.Split("\\").Last();
-                var filePath = Path.Combine(uploads, uniqueFileName);
-                await request.UploadedFile.CopyToAsync(new FileStream(filePath, FileMode.Create));
-
-                await _uploadService.HandleFileUploadAsync(request, filePath);
-
-
+                await _uploadService.HandleFileUploadAsync(request);
                 return Ok("All the files are successfully uploaded.");
             }
             catch (Exception ex)

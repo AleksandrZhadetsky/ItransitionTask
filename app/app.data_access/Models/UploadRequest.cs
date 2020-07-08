@@ -6,6 +6,6 @@ namespace app.data_access.Models
     {
         public IFormFile UploadedFile { get; set; }
         public Category Category { get; set; }
-        public string UserName { get; set; }
+        public string UserId { get; set; }
     }
 }

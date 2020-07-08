@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 import { NgForm, FormControl } from '@angular/forms';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
+// import { UserManager } from 'oidc-client';
 
 @Component({
     selector: 'upload-component',
@@ -11,7 +12,8 @@ export class UploadComponent {
     public progress: number;
     public message: string;
     public file: File = null;
-    public category = null;
+    public userId: string;
+    public category = { key: "", value: 0 };
     public categories = [
         { key: "Scientific", value: 0 },
         { key: "Personal", value: 1 },
@@ -33,16 +35,14 @@ export class UploadComponent {
 
     onUpload() {
         const formdata = new FormData();
-        let username: string;
-        let data = {
-
-        };
-        this.authService.getUser().subscribe(user => username = user.name);
-        formdata.append('UploadedFile', this.file, this.file.name);
-        formdata.append('Category', this.category.value);
-        formdata.append('UserName', username);
-
-        console.log(formdata);
+        this.authService.getCurrentUser().then(u => {
+            this.userId = u.profile.sub;
+            // alert(this.userId);
+        })
+        
+        formdata.append('UploadedFile', this.file, this.file?.name);
+        formdata.append('Category', this.category?.toString());
+        formdata.append('UserId', this.userId);
 
         this.http.post('api/upload', formdata)
             .subscribe(response => {
