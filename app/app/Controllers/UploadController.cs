@@ -26,7 +26,7 @@ namespace app.Controllers
         }
 
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<ActionResult> UploadFilesAsync(UploadRequest request)
+        public async Task<ActionResult> UploadFilesAsync(UploadImageViewModel request)
         {
             try
             {

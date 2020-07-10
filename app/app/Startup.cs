@@ -116,6 +116,10 @@ namespace app
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+            app.Use(async (context, next) =>
+            {
+                await next.Invoke();
+            });
         }
     }
 }

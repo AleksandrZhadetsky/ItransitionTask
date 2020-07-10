@@ -2,7 +2,7 @@
 
 namespace app.data_access.Models
 {
-    public class UploadRequest
+    public class UploadImageViewModel
     {
         public IFormFile UploadedFile { get; set; }
         public Category Category { get; set; }
