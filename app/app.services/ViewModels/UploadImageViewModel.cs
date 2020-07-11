@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using app.data_access.Models;
+using Microsoft.AspNetCore.Http;
 
-namespace app.data_access.Models
+namespace app.services.ViewModels
 {
     public class UploadImageViewModel
     {
