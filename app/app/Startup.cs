@@ -51,7 +51,8 @@ namespace app
 
             services.AddControllersWithViews();
 
-            services.AddTransient<IUploadService, UploadService>();
+            services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IDownloadService, DownloadService>();
 
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory

@@ -10,5 +10,6 @@ namespace app.services.Interfaces
     {
         Task<byte[]> HandleFileDownloadAsync(Guid imageId);
         Task<string> DecompressAsync(FileInfo fileToDecompress, string targetExtension);
+        Task<IEnumerable<string>> GetImageUrlsAsync();
     }
 }

@@ -30,9 +30,17 @@
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ClientApp\ImagesController.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="Controllers\ImagesController.cs" />
   </ItemGroup>
   
   <ItemGroup>

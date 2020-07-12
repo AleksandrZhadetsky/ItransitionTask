@@ -36,7 +36,7 @@ namespace app.services.Services
                 
                 var buffer = await File.ReadAllBytesAsync(decompressedFilePath);
 
-                // here delete the temp file
+                File.Delete(decompressedFilePath); // here delete the temp file
 
                 return buffer;
             }
@@ -44,20 +44,18 @@ namespace app.services.Services
             {
                 var buffer = await File.ReadAllBytesAsync(dbImage.Path);
 
-                // here delete the temp file
-
                 return buffer;
             }
         }
 
         public async Task<string> DecompressAsync(FileInfo fileToDecompress, string targetExtension)
         {
-            string currentFileName = fileToDecompress.FullName;
-            string newFileName = currentFileName.Remove(currentFileName.Length - fileToDecompress.Extension.Length) + $".{targetExtension}";
+            string currentFilePath = fileToDecompress.FullName;
+            string newFilePath = currentFilePath.Remove(currentFilePath.Length - fileToDecompress.Extension.Length) + $".{targetExtension}";
 
             using (FileStream originalFileStream = fileToDecompress.OpenRead())
             {
-                using (FileStream decompressedFileStream = File.Create(newFileName))
+                using (FileStream decompressedFileStream = File.Create(newFilePath))
                 {
                     using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
                     {
@@ -66,7 +64,12 @@ namespace app.services.Services
                 }
             }
 
-            return newFileName;
+            return newFilePath;
+        }
+
+        public async Task<IEnumerable<string>> GetImageUrlsAsync()
+        {
+            return await _dbContext.Images.Select(img => img.Path).ToListAsync();
         }
     }
 }
