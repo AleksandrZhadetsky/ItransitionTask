@@ -9,7 +9,7 @@ namespace app.services.Interfaces
     public interface IDownloadService
     {
         Task<byte[]> HandleFileDownloadAsync(Guid imageId);
-        Task<string> DecompressAsync(FileInfo fileToDecompress, string targetExtension);
-        Task<IEnumerable<string>> GetImageUrlsAsync();
+        Task<string> DecompressAsync(FileInfo fileToDecompress);
+        Task<IList<string>> GetImageUrlsAsync();
     }
 }

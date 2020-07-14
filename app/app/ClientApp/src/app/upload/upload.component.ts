@@ -10,7 +10,7 @@ import { User } from 'oidc-client';
     templateUrl: './upload.component.html',
 })
 export class UploadComponent {
-    public progress: number;
+    public response: object;
     public message: string;
     public file: File = null;
     public user : User;
@@ -38,7 +38,7 @@ export class UploadComponent {
         const formdata = new FormData();
         this.authService.getCurrentUser().then(u => {
             this.user = u;
-            alert(this.user.profile.sub);
+            // alert(this.user.profile.sub);
         })
         
         console.log(this.user);
@@ -48,8 +48,10 @@ export class UploadComponent {
 
         this.http.post('api/upload', formdata)
             .subscribe(response => {
-                console.log(response);
+                this.response = response;
+                alert(response);
             });
+            alert(this.response);
     }
 }
 

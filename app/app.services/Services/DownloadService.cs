@@ -26,48 +26,18 @@ namespace app.services.Services
         public async Task<byte[]> HandleFileDownloadAsync(Guid fileId)
         {
             var dbImage = await _dbContext.Images.Where(img => img.Id == fileId).FirstOrDefaultAsync();
-            var compressed = dbImage.Compressed;
-            var targetExtension = dbImage.TargetExtension;
             var filePath = dbImage.Path;
+            var buffer = await File.ReadAllBytesAsync(dbImage.Path);
 
-            if (dbImage.Compressed)
-            {
-                var decompressedFilePath = await DecompressAsync(new FileInfo(dbImage.Path), targetExtension);
-                
-                var buffer = await File.ReadAllBytesAsync(decompressedFilePath);
-
-                File.Delete(decompressedFilePath); // here delete the temp file
-
-                return buffer;
-            }
-            else
-            {
-                var buffer = await File.ReadAllBytesAsync(dbImage.Path);
-
-                return buffer;
-            }
+            return buffer;
         }
 
-        public async Task<string> DecompressAsync(FileInfo fileToDecompress, string targetExtension)
+        public async Task<string> DecompressAsync(FileInfo fileToDecompress)
         {
-            string currentFilePath = fileToDecompress.FullName;
-            string newFilePath = currentFilePath.Remove(currentFilePath.Length - fileToDecompress.Extension.Length) + $".{targetExtension}";
-
-            using (FileStream originalFileStream = fileToDecompress.OpenRead())
-            {
-                using (FileStream decompressedFileStream = File.Create(newFilePath))
-                {
-                    using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
-                    {
-                        await decompressionStream.CopyToAsync(decompressedFileStream);
-                    }
-                }
-            }
-
-            return newFilePath;
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<string>> GetImageUrlsAsync()
+        public async Task<IList<string>> GetImageUrlsAsync()
         {
             return await _dbContext.Images.Select(img => img.Path).ToListAsync();
         }

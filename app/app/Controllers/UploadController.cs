@@ -14,9 +14,6 @@ namespace app.Controllers
     [Route("api/[controller]")]
     public class UploadController : Controller
     {
-        private const int CategoryItems = 10;
-        private const int DefaultCategory = 9;
-
         private readonly UserManager<ApplicationUser> _userManager;
         private IUploadService _uploadService;
 

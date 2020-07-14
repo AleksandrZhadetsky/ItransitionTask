@@ -23,17 +23,9 @@ namespace app.ClientApp
         }
 
         [HttpGet]
-        public async Task<IActionResult> DownloadImageAsync(Guid imageId)
-        {
-            return Ok(await _downloadService.HandleFileDownloadAsync(imageId));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetImageUrls()
+        public async Task<IActionResult> GetUrls()
         {
             return Ok(await _downloadService.GetImageUrlsAsync());
         }
-
-        // TODO: add endpoints to get images grouped by category and etc.
     }
 }

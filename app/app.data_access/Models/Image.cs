@@ -12,7 +12,5 @@ namespace app.data_access.Models
         public ApplicationUser User { get; set; }
         public DateTime UploadDate { get; set; }
         public Category Category { get; set; } = Category.Other;
-        public bool Compressed { get; set; }
-        public string TargetExtension { get; set; }
     }
 }
