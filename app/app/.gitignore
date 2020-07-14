@@ -230,4 +230,4 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 
-app\app\wwwroot\uploads
+app\app\wwwroot\uploads\
