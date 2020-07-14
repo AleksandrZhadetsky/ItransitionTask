@@ -1,5 +1,4 @@
-﻿using app.data_access.Models;
-using app.services.ViewModels;
+﻿using app.services.ViewModels;
 using Microsoft.AspNetCore.Http;
 using PhotoSauce.MagicScaler;
 using System.IO;

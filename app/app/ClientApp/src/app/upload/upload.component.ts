@@ -3,7 +3,6 @@ import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/c
 import { NgForm, FormControl } from '@angular/forms';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { User } from 'oidc-client';
-// import { UserManager } from 'oidc-client';
 
 @Component({
     selector: 'upload-component',
@@ -38,7 +37,6 @@ export class UploadComponent {
         const formdata = new FormData();
         this.authService.getCurrentUser().then(u => {
             this.user = u;
-            // alert(this.user.profile.sub);
         })
         
         console.log(this.user);
@@ -49,9 +47,7 @@ export class UploadComponent {
         this.http.post('api/upload', formdata)
             .subscribe(response => {
                 this.response = response;
-                alert(response);
             });
-            alert(this.response);
     }
 }
 

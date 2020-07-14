@@ -2,7 +2,7 @@
 {
     public enum Category
     {
-        Scientific,
+        Scientific = 1,
         Personal,
         Fiction,
         Nature,

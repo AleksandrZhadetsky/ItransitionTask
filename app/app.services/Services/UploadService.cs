@@ -1,15 +1,12 @@
 ﻿using app.data_access.Data;
 using app.data_access.Models;
-using app.services.Constants;
 using app.services.Interfaces;
 using app.services.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using PhotoSauce.MagicScaler;
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +42,7 @@ namespace app.services.Services
                     Path = filePath,
                     UserId = request.UserId,
                     UploadDate = DateTime.Now,
-                    Category = request.Category
+                    Category = request.Category == 0 ? Category.Other : request.Category
                 };
 
             _dbContext.Images.Add(dbImage);

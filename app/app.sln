@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "app", "app\app.csproj", "{325175DB-A101-4812-B658-53AB5A87E73F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app.data_access", "app.data_access\app.data_access.csproj", "{C420FD28-D35B-4C26-B5DD-4021C8579B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "app.data_access", "app.data_access\app.data_access.csproj", "{C420FD28-D35B-4C26-B5DD-4021C8579B4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app.services", "app.services\app.services.csproj", "{B6B33F8B-AE53-4294-BD11-5A2AF841A93D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "app.services", "app.services\app.services.csproj", "{B6B33F8B-AE53-4294-BD11-5A2AF841A93D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{640F73B1-6145-4EBF-B7BC-B232F7F8E2C1}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
