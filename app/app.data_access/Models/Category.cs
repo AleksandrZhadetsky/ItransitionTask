@@ -1,6 +1,6 @@
 ﻿namespace app.data_access.Models
 {
-    public enum Category
+    public enum Category // rename to categories
     {
         Scientific = 1,
         Personal,

@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using app.data_access.Data;
 using app.data_access.Models;
 using app.services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -19,27 +19,27 @@ namespace app.ClientApp
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetImages()
+        public Task<IEnumerable<string>> GetImages()
         {
-            return Ok(await _service.GetImageUrlsAsync());
+            return _service.GetImageUrlsAsync();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetImagesByCategory(Category category)
+        public Task<IEnumerable<string>> GetImagesByCategory(Category category)
         {
-            return Ok(await _service.GetImageUrlsByCategoryAsync(category));
+            return _service.GetImageUrlsByCategoryAsync(category);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetImagesByDate(DateTime date)
+        public Task<IEnumerable<string>> GetImagesByDate(DateTime date)
         {
-            return Ok(await _service.GetImageUrlsByDateAsync(date));
+            return _service.GetImageUrlsByDateAsync(date);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetImagesByUser(string userId)
+        public Task<IEnumerable<string>> GetImagesByUser(string userId)
         {
-            return Ok(await _service.GetImageUrlsByUserAsync(userId));
+            return _service.GetImageUrlsByUserAsync(userId);
         }
     }
 }
