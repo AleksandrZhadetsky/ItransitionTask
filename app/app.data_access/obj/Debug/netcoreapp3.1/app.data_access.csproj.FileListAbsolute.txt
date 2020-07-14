@@ -1,0 +1,18 @@
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\bin\Debug\netcoreapp3.1\app.data_access.deps.json
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\bin\Debug\netcoreapp3.1\app.data_access.dll
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.AssemblyInfo.cs
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\bin\Debug\netcoreapp3.1\app.data_access.pdb
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.dll
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.pdb
+C:\Users\Admin\source\repos\ItransitionTask\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\bin\Debug\netcoreapp3.1\app.data_access.deps.json
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\bin\Debug\netcoreapp3.1\app.data_access.dll
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\bin\Debug\netcoreapp3.1\app.data_access.pdb
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.AssemblyInfo.cs
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.dll
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.pdb
+C:\Users\Admin\Desktop\зафэйленный проект\app\app.data_access\obj\Debug\netcoreapp3.1\app.data_access.csproj.CoreCompileInputs.cache
