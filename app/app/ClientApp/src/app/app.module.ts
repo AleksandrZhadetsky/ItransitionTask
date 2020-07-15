@@ -12,6 +12,8 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ImageRetrieve } from './image-retrieve/image-retrieve.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +30,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'upload', component: UploadComponent, canActivate: [AuthorizeGuard] },
+      { path: 'gallery', component: ImageRetrieve },
     ]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,   
+    ScrollingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
