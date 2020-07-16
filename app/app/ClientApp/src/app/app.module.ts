@@ -13,14 +13,15 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ImageRetrieve } from './image-retrieve/image-retrieve.component';
+import { ImageRetrieveComponent } from './image-retrieve/image-retrieve.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    UploadComponent
+    UploadComponent,
+    ImageRetrieveComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,7 +31,7 @@ import { ImageRetrieve } from './image-retrieve/image-retrieve.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'upload', component: UploadComponent, canActivate: [AuthorizeGuard] },
-      { path: 'gallery', component: ImageRetrieve },
+      { path: 'gallery', component: ImageRetrieveComponent },
     ]),
     BrowserAnimationsModule,   
     ScrollingModule

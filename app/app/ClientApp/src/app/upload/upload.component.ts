@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
-import { NgForm, FormControl } from '@angular/forms';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { User } from 'oidc-client';
 
@@ -39,7 +38,6 @@ export class UploadComponent {
             this.user = u;
         })
         
-        console.log(this.user);
         formdata.append('UploadedFile', this.file, this.file.name);
         formdata.append('Category', this.category.toString());
         formdata.append('UserId', this.user.profile.sub);
