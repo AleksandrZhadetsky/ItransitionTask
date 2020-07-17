@@ -1,9 +1,13 @@
 .example-viewport {
-    height: 200px;
-    width: 200px;
-    border: 1px solid black;
+    height: 1000px;
+    width: fit-content;
   }
-  
-  .example-item {
-    height: 50px;
+
+  mat-card{
+    display: inline-block;
+    margin: 10px;
+  }
+
+  img {
+    width: 200px;
   }

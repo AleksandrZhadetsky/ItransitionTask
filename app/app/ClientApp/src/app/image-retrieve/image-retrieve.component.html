@@ -1,3 +1,20 @@
-<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-  <div *cdkVirtualFor="let item of ds" class="example-item">{{item || 'Loading...'}}</div>
+<cdk-virtual-scroll-viewport itemSize="300" class="example-viewport">
+  <!-- <div *cdkVirtualFor="let item of ds"> -->
+    <mat-card  *cdkVirtualFor="let item of dataSource" class="example-card" style="background-color:rgb(238, 236, 132);">
+      <mat-card-header>
+        <mat-card-title>{{item.uploadDate}}</mat-card-title>
+        <mat-card-subtitle>by {{item.userId}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://2eu.funnyjunk.com/comments/Adorable+_59d14823fffdd2bb58f4f83dd9ee0cf9.jpg" alt="Photo">
+      <mat-card-content>
+        <p>
+          qwer qwer
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button class="btn" style="background-color: aqua; margin-right: 5px;">LIKE</button>
+        <button mat-button class="btn" style="background-color: aqua;">SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+  <!-- </div> -->
 </cdk-virtual-scroll-viewport>

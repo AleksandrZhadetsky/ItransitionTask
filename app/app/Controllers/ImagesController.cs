@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using app.data_access.Models;
 using app.services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace app.ClientApp
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("api/images")]
     public class ImagesController : ControllerBase
     {
         private readonly IImageRetrieveService _service;
@@ -19,8 +19,9 @@ namespace app.ClientApp
             _service = imageRetrieveService;
         }
 
+        [Route("getImages")]
         [HttpGet]
-        public async Task<IEnumerable<Image>> GetImages(int start, int end)
+        public async Task<IEnumerable<Image>> GetImages(int start = 0, int end = 10)
         {
             return await _service.GetImagesAsync(start, end).ToListAsync();
         }
