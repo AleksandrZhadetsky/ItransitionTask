@@ -21,25 +21,25 @@ namespace app.ClientApp
 
         [Route("getImages")]
         [HttpGet]
-        public async Task<IEnumerable<Image>> GetImages(int start = 0, int end = 10)
+        public async Task<IEnumerable<Image>> GetImages([FromQuery] int start, int end)
         {
             return await _service.GetImagesAsync(start, end).ToListAsync();
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Image>> GetImagesByCategory(Categories category, int start, int end)
+        public async Task<IEnumerable<Image>> GetImagesByCategory([FromQuery] Categories category, int start, int end)
         {
             return await _service.GetImagesByCategoryAsync(category, start, end).ToListAsync();
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Image>> GetImagesByDate(DateTime date, int start, int end)
+        public async Task<IEnumerable<Image>> GetImagesByDate([FromQuery] DateTime date, int start, int end)
         {
             return await _service.GetImagesByDateAsync(date, start, end).ToListAsync();
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Image>> GetImagesByUser(string userId, int start, int end)
+        public async Task<IEnumerable<Image>> GetImagesByUser([FromQuery] string userId, int start, int end)
         {
             return await _service.GetImagesByUserAsync(userId, start, end).ToListAsync();
         }

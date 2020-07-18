@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ImageViewModel } from './ImageViewModel';
+import { ImageRetrieveService } from './imade-retrieve.service';
 
 /** @title Virtual scroll with a custom data source */
 @Component({
@@ -13,16 +14,14 @@ import { ImageViewModel } from './ImageViewModel';
 })
 export class ImageRetrieveComponent {
   public dataSource: ImageViewModel[];
-  constructor(private httpClient: HttpClient) {
-    this.httpClient.get<ImageViewModel[]>('https://localhost:5001/api/images/getImages')
-      .subscribe(resp => {
-        this.dataSource = resp;
-      },
-        error => {
-          console.error(error)
-        });
-    alert(this.dataSource);
+  constructor(private service: ImageRetrieveService) {
+    service.getImages(0, 10).subscribe(source => {
+      this.dataSource = source;
+      console.log("inside the ctor scope: " + this.dataSource);
+    });
+    console.log("outside the ctor scope: " + this.dataSource);
   }
+
 }
 
 // export class MyDataSource extends DataSource<ImageViewModel | undefined> {
