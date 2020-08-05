@@ -1,12 +1,52 @@
 .example-viewport {
-  height: 950px;
+  height: 880px;
   width: 950px;
-  border: 1px solid black;
+}
+
+.content-wrapper {  
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-content: space-around;
+}
+
+.button-container{
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
 }
 
 .example-item {
   height: 450px;
   width: 300px;
-  display: inline-table;
-  margin: 5px 5px;
+  margin: 0px 5px 5px 5px;
+  border-radius: 50px;
 }
+
+img {
+  width: 300px;
+  height: 200px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffc977; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ffa31a; 
+}
+/*------------------------------------------------------*/

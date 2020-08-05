@@ -17,10 +17,18 @@ export class ImageRetrieveComponent {
   constructor(private _service: ImageRetrieveService){
     this.ds = new MyDataSource(_service);
   }
+
+  // public loadImagesByCategory(category: string){
+  //   console.log("choosen: "+ category);
+  // }
+
+  public loadAllImages = this._service.getImages;
+  public loadByCategory = this._service.getImagesByCategory;
+  public loadImagesByData = this._service.getImagesByDate;
 }
 
 export class MyDataSource extends DataSource<ImageViewModel | undefined> implements OnInit {
-  private length = 18;
+  private length = 12;
   private _pageSize = 6;
   private _cachedData = Array.from<ImageViewModel>({length: this.length});
   private _fetchedPages = new Set<number>();

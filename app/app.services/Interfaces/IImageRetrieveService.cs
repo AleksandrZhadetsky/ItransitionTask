@@ -1,14 +1,16 @@
 ﻿using app.data_access.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace app.services.Interfaces
 {
     public interface IImageRetrieveService
     {
-        IQueryable<Image> GetImagesAsync(int start, int end);
-        IQueryable<Image> GetImagesByCategoryAsync(Categories category, int start, int end);
-        IQueryable<Image> GetImagesByUserAsync(string userId, int start, int end);
-        IQueryable<Image> GetImagesByDateAsync(DateTime date, int start, int end);
+        Task<IEnumerable<Image>> GetImagesAsync(int start, int end);
+        Task<IEnumerable<Image>> GetImagesByCategoryAsync(Categories category, int start, int end);
+        Task<IEnumerable<Image>> GetImagesByUserAsync(string userId, int start, int end);
+        Task<IEnumerable<Image>> GetImagesByDateAsync(DateTime date, int start, int end);
     }
 }

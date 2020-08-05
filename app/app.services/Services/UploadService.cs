@@ -28,6 +28,7 @@ namespace app.services.Services
             var uploads = Path.Combine(_hostingEnvironment.WebRootPath, Constants.Constants.UploadsFolder);
             string uniqueFileName = Guid.NewGuid().ToString() + "_" + request.UploadedFile.FileName.Split("\\").Last();
             var filePath = Path.Combine(uploads, uniqueFileName);
+            var relativeImageUrl = Path.Combine(Constants.Constants.UploadsFolder, uniqueFileName);
 
             var settings = new ProcessImageSettings { Width = 500 };
 
@@ -39,7 +40,7 @@ namespace app.services.Services
             var dbImage =
                 new Image
                 {
-                    Path = filePath,
+                    Path = relativeImageUrl,
                     UserId = request.UserId,
                     UploadDate = DateTime.Now,
                     Category = request.Category

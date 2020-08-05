@@ -3,7 +3,7 @@ export class ImageViewModel{
         public id: string,
         public path: string,
         public userId: string,
-        public uploadDate: Date,
+        public uploadDate: string,
         public category: number
         ){}
 }

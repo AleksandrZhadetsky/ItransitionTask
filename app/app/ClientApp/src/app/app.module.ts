@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ImageRetrieveComponent } from './image-retrieve/image-retrieve.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { MatCardModule } from '@angular/material/card';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    MatMenuModule,
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([

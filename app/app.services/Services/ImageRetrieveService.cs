@@ -1,8 +1,11 @@
 ﻿using app.data_access.Data;
 using app.data_access.Models;
 using app.services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace app.services.Services
 {
@@ -15,31 +18,36 @@ namespace app.services.Services
             _dbContext = dbContext;
         }
 
-        public IQueryable<Image> GetImagesAsync(int start, int end)
+        public async Task<IEnumerable<Image>> GetImagesAsync(int start, int end)
         {
             return
-                _dbContext
+                 (await _dbContext
                 .Images
                 .Skip(start)
                 .Take(end - start)
-                .AsQueryable();
+                .ToListAsync())
+                .Select(img => 
+                {
+                    img.Path = Constants.Constants.HostUrl + '/' + img.Path;
+                    return img;
+                });
         }
 
-        public IQueryable<Image> GetImagesByCategoryAsync(Categories category, int start, int end)
+        public async Task<IEnumerable<Image>> GetImagesByCategoryAsync(Categories category, int start, int end)
         {
             return
-                _dbContext
+                await _dbContext
                 .Images
                 .Where(img => img.Category == category)
                 .Skip(start)
                 .Take(end - start)
-                .AsQueryable();
+                .ToListAsync();
         }
 
-        public IQueryable<Image> GetImagesByDateAsync(DateTime date, int start, int end)
+        public async Task<IEnumerable<Image>> GetImagesByDateAsync(DateTime date, int start, int end)
         {
-            return 
-                _dbContext
+            return
+                await _dbContext
                 .Images
                 .Where(img =>
                 img.UploadDate.Year == date.Year &&
@@ -47,17 +55,18 @@ namespace app.services.Services
                 img.UploadDate.Day == date.Day)
                 .Skip(start)
                 .Take(end - start)
-                .AsQueryable();
+                .ToListAsync();
         }
 
-        public IQueryable<Image> GetImagesByUserAsync(string userId, int start, int end)
+        public async Task<IEnumerable<Image>> GetImagesByUserAsync(string userId, int start, int end)
         {
-            return _dbContext
+            return 
+                await _dbContext
                 .Images
                 .Where(img => img.UserId == userId)
                 .Skip(start)
                 .Take(end - start)
-                .AsQueryable();
+                .ToListAsync();
         }
     }
 }

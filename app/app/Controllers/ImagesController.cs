@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using app.data_access.Models;
+using app.services.Constants;
 using app.services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,25 +26,25 @@ namespace app.ClientApp
         [HttpGet]
         public async Task<IEnumerable<Image>> GetImages([FromQuery] int start, int end)
         {
-            return await _service.GetImagesAsync(start, end).ToListAsync();
+            return await _service.GetImagesAsync(start, end);
         }
 
         [HttpGet]
         public async Task<IEnumerable<Image>> GetImagesByCategory([FromQuery] Categories category, int start, int end)
         {
-            return await _service.GetImagesByCategoryAsync(category, start, end).ToListAsync();
+            return await _service.GetImagesByCategoryAsync(category, start, end);
         }
 
         [HttpGet]
         public async Task<IEnumerable<Image>> GetImagesByDate([FromQuery] DateTime date, int start, int end)
         {
-            return await _service.GetImagesByDateAsync(date, start, end).ToListAsync();
+            return await _service.GetImagesByDateAsync(date, start, end);
         }
 
         [HttpGet]
         public async Task<IEnumerable<Image>> GetImagesByUser([FromQuery] string userId, int start, int end)
         {
-            return await _service.GetImagesByUserAsync(userId, start, end).ToListAsync();
+            return await _service.GetImagesByUserAsync(userId, start, end);
         }
     }
 }
