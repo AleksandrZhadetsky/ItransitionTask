@@ -24,9 +24,9 @@ namespace app.ClientApp
 
         [Route("getImages")]
         [HttpGet]
-        public async Task<IEnumerable<Image>> GetImages([FromQuery] int start, int end)
+        public async Task<IEnumerable<Image>> GetImages([FromQuery] int start, int end, Categories category)
         {
-            return await _service.GetImagesAsync(start, end);
+            return await _service.GetImagesAsync(start, end, category);
         }
 
         [HttpGet]

@@ -12,10 +12,15 @@ select{
   background-color:rgb(255, 243, 81);;
 }
 
+.mat-select-value{
+  color: black;
+}
+
 .select-container {
   width: 650px;
   margin: 0px auto 20px auto;
   padding-left: 17.5px;
+  color: #ffa31a;
 }
 
 .inner-select-container {

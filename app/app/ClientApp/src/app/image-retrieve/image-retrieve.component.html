@@ -1,24 +1,13 @@
 <div class="select-container">
-<mat-form-field>
-  <mat-label>Category</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let category of categories" [value]="category.value">
-      {{category.key}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-form-field>
+    <mat-label style="color: black;">Category</mat-label>
+    <mat-select (selectionChange)="onSelectedCategory()" [(value)]="selected">
+      <mat-option *ngFor="let category of categories" [value]="category.value">
+        {{category.key}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
-
-<!-- <div class="select-container">
-  <div class="inner-select-container">
-  <label style="margin: 2em 0px 0px 0px;">
-      <h5>Category</h5>
-  </label>
-  <select class="form-control" name="category" >
-      <option *ngFor="let category of categories" [value]="category.value">{{category.key}}</option>
-  </select>
-</div>
-</div> -->
 
 <cdk-virtual-scroll-viewport itemSize="600" class="example-viewport">
   <mat-card *cdkVirtualFor="let item of ds" class="example-item" style="background-color:rgb(255, 191, 52);">
