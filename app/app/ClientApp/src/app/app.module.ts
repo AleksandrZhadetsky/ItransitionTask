@@ -15,7 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ImageRetrieveComponent } from './image-retrieve/image-retrieve.component';
 import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MatMenuModule} from '@angular/material/menu';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     MatMenuModule,
+    MatSelectModule,
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
@@ -36,7 +38,7 @@ import { MatMenuModule} from '@angular/material/menu';
       { path: 'upload', component: UploadComponent, canActivate: [AuthorizeGuard] },
       { path: 'gallery', component: ImageRetrieveComponent },
     ]),
-    BrowserAnimationsModule,   
+    BrowserAnimationsModule,
     ScrollingModule,
     MatCardModule
   ],

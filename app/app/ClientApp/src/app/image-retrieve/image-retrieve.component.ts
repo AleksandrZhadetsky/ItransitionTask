@@ -14,23 +14,32 @@ import { ImageRetrieveService } from './imade-retrieve.service';
 
 export class ImageRetrieveComponent {
   public ds: MyDataSource;
-  constructor(private _service: ImageRetrieveService){
+  public categories = [
+    { key: "Scientific", value: 0 },
+    { key: "Personal", value: 1 },
+    { key: "Fiction", value: 2 },
+    { key: "Nature", value: 3 },
+    { key: "Landscape", value: 4 },
+    { key: "Cinema", value: 5 },
+    { key: "Food", value: 6 },
+    { key: "People", value: 7 },
+    { key: "Art", value: 8 },
+    { key: "Other", value: 9 },
+    { key: "All", value: 10 }
+  ];
+  constructor(private _service: ImageRetrieveService) {
     this.ds = new MyDataSource(_service);
   }
 
-  // public loadImagesByCategory(category: string){
-  //   console.log("choosen: "+ category);
-  // }
-
-  public loadAllImages = this._service.getImages;
-  public loadByCategory = this._service.getImagesByCategory;
-  public loadImagesByData = this._service.getImagesByDate;
+  public loadImagesByCategory(category: string) {
+    console.log("choosen: " + category);
+  }
 }
 
 export class MyDataSource extends DataSource<ImageViewModel | undefined> implements OnInit {
   private length = 12;
   private _pageSize = 6;
-  private _cachedData = Array.from<ImageViewModel>({length: this.length});
+  private _cachedData = Array.from<ImageViewModel>({ length: this.length });
   private _fetchedPages = new Set<number>();
   private _dataStream = new BehaviorSubject<(ImageViewModel | undefined)[]>(this._cachedData);
   private _subscription = new Subscription();
@@ -72,9 +81,9 @@ export class MyDataSource extends DataSource<ImageViewModel | undefined> impleme
 
     this._service.getImages(this._pageSize * page, this._pageSize * page + this._pageSize).subscribe(res => {
       this._cachedData.push(...res);
-      // this._cachedData.splice(page * this._pageSize, this._pageSize,
-      //   ...Array.from({length: this._pageSize})
-      //       .map((_, i) => `Item #${page * this._pageSize + i}`));
+      this._cachedData.splice(page * this._pageSize, this._pageSize,
+        ...Array.from<ImageViewModel>(res)
+            );
       this._dataStream.next(this._cachedData);
     });
   }

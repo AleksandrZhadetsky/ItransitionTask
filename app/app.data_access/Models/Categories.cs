@@ -11,6 +11,7 @@
         Food,
         People,
         Art,
-        Other
+        Other,
+        All
     }
 }

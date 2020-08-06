@@ -11,6 +11,6 @@ namespace app.data_access.Models
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
         public DateTime UploadDate { get; set; }
-        public Categories Category { get; set; } = Categories.Other;
+        public Categories Category { get; set; } = Categories.All;
     }
 }

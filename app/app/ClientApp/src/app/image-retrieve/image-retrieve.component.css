@@ -1,13 +1,26 @@
 .example-viewport {
   height: 880px;
-  width: 950px;
+  width: 650px;
+  margin: auto;
 }
 
-.content-wrapper {  
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-content: space-around;
+h5{
+  margin: auto;
+}
+
+select{
+  background-color:rgb(255, 243, 81);;
+}
+
+.select-container {
+  width: 650px;
+  margin: 0px auto 20px auto;
+  padding-left: 17.5px;
+}
+
+.inner-select-container {
+  width: fit-content;
+  margin: 0px auto 0px 0px;
 }
 
 .button-container{
@@ -17,15 +30,15 @@
 }
 
 .example-item {
-  height: 450px;
-  width: 300px;
-  margin: 0px 5px 5px 5px;
+  height: 600px;
+  width: 600px;
+  margin: auto auto 5px auto;
   border-radius: 50px;
 }
 
 img {
-  width: 300px;
-  height: 200px;
+  width: 600px;
+  height: 380px;
 }
 
 /* width */

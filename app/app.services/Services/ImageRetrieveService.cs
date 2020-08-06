@@ -18,15 +18,16 @@ namespace app.services.Services
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Image>> GetImagesAsync(int start, int end)
+        public async Task<IEnumerable<Image>> GetImagesAsync(int start, int end, Categories category)
         {
             return
-                 (await _dbContext
+                (await _dbContext
                 .Images
+                .Where(img => category == Categories.All ? true : img.Category == category)
                 .Skip(start)
                 .Take(end - start)
                 .ToListAsync())
-                .Select(img => 
+                .Select(img =>
                 {
                     img.Path = Constants.Constants.HostUrl + '/' + img.Path;
                     return img;
@@ -60,7 +61,7 @@ namespace app.services.Services
 
         public async Task<IEnumerable<Image>> GetImagesByUserAsync(string userId, int start, int end)
         {
-            return 
+            return
                 await _dbContext
                 .Images
                 .Where(img => img.UserId == userId)

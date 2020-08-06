@@ -1,53 +1,43 @@
-<div style="float: left;">
-  <button mat-button class="btn btn-outline-dark" [matMenuTriggerFor]="menu">Category</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="loadByCategory(9,0,6)" >All</button>
-    <button mat-menu-item (click)="loadByCategory(0,0,6)" >Scientific</button>
-    <button mat-menu-item (click)="loadByCategory(1,0,6)" >Personal</button>
-    <button mat-menu-item (click)="loadByCategory(2,0,6)" >Fiction</button>
-    <button mat-menu-item (click)="loadByCategory(3,0,6)" >Nature</button>
-    <button mat-menu-item (click)="loadByCategory(4,0,6)" >Landscape</button>
-    <button mat-menu-item (click)="loadByCategory(5,0,6)" >Cinema</button>
-    <button mat-menu-item (click)="loadByCategory(6,0,6)" >Food</button>
-    <button mat-menu-item (click)="loadByCategory(7,0,6)" >People</button>
-    <button mat-menu-item (click)="loadByCategory(8,0,6)" >Art</button>
-  </mat-menu>
+<div class="select-container">
+<mat-form-field>
+  <mat-label>Category</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let category of categories" [value]="category.value">
+      {{category.key}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 </div>
-<!-- 
 
-        { key: "Scientific", value: 0 },
-        { key: "Personal", value: 1 },
-        { key: "Fiction", value: 2 },
-        { key: "Nature", value: 3 },
-        { key: "Landscape", value: 4 },
-        { key: "Cinema", value: 5 },
-        { key: "Food", value: 6 },
-        { key: "People", value: 7 },
-        { key: "Art", value: 8 },
-        { key: "Other", value: 9 }
+<!-- <div class="select-container">
+  <div class="inner-select-container">
+  <label style="margin: 2em 0px 0px 0px;">
+      <h5>Category</h5>
+  </label>
+  <select class="form-control" name="category" >
+      <option *ngFor="let category of categories" [value]="category.value">{{category.key}}</option>
+  </select>
+</div>
+</div> -->
 
-   -->
-
-<cdk-virtual-scroll-viewport itemSize="70" class="example-viewport">
-  <div class="content-wrapper">
-    <mat-card *cdkVirtualFor="let item of ds" class="example-item" style="background-color:rgb(255, 204, 93);">
-      <mat-card-header>
-        <mat-card-title>{{item.uploadDate}}</mat-card-title>
-        <mat-card-subtitle>by {{item.userId}}</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image src="{{item.path}}" alt="Photo">
-      <mat-card-content>
-        <p>
-          there may be description
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <div class="button-container">
-          <button mat-button class="btn btn-sm" (click)="test()"
-            style="background-color: rgb(224, 33, 122); margin-right: 5px;">LIKE</button>
-          <button mat-button class="btn btn-sm" style="background-color: rgb(42, 190, 87);">SHARE</button>
-        </div>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+<cdk-virtual-scroll-viewport itemSize="600" class="example-viewport">
+  <mat-card *cdkVirtualFor="let item of ds" class="example-item" style="background-color:rgb(255, 191, 52);">
+    <mat-card-header>
+      <mat-card-title>{{item.uploadDate}}</mat-card-title>
+      <mat-card-subtitle>by {{item.userId}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{item.path}}" alt="Photo">
+    <mat-card-content>
+      <p>
+        there may be description
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="button-container">
+        <button mat-button class="btn btn-sm" (click)="test()"
+          style="background-color: rgb(224, 33, 122); margin-right: 5px;">LIKE</button>
+        <button mat-button class="btn btn-sm" style="background-color: rgb(42, 190, 87);">SHARE</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
 </cdk-virtual-scroll-viewport>

@@ -30,11 +30,6 @@ namespace app.services.Services
             return buffer;
         }
 
-        public async Task<string> DecompressAsync(FileInfo fileToDecompress)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IList<string>> GetImageUrlsAsync()
         {
             return await _dbContext.Images.Select(img => img.Path).ToListAsync();
