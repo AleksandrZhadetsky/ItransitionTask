@@ -9,24 +9,27 @@
   </mat-form-field>
 </div>
 
-<cdk-virtual-scroll-viewport itemSize="600" class="example-viewport">
-  <mat-card *cdkVirtualFor="let item of ds" class="example-item" style="background-color:rgb(255, 191, 52);">
-    <mat-card-header>
-      <mat-card-title>{{item.uploadDate}}</mat-card-title>
-      <mat-card-subtitle>by {{item.userId}}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="{{item.path}}" alt="Photo">
-    <mat-card-content>
-      <p>
-        there may be description
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <div class="button-container">
-        <button mat-button class="btn btn-sm" (click)="test()"
-          style="background-color: rgb(224, 33, 122); margin-right: 5px;">LIKE</button>
-        <button mat-button class="btn btn-sm" style="background-color: rgb(42, 190, 87);">SHARE</button>
-      </div>
-    </mat-card-actions>
-  </mat-card>
+<cdk-virtual-scroll-viewport *ngIf="shouldRenderVS" itemSize="600" class="example-viewport">
+  <div *cdkVirtualFor="let item of ds; let i = index">
+    <mat-card *ngIf="item" class="example-item" style="background-color:rgb(255, 191, 52);">
+      <mat-card-header>
+        <mat-card-title>{{item.uploadDate}}</mat-card-title>
+        <mat-card-subtitle>by {{item.userId}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="{{item.path}}" alt="Photo">
+      <mat-card-content>
+        <p>
+          Category: {{item.category}}
+          Number: {{i}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="button-container">
+          <button mat-button class="btn btn-sm" (click)="test()"
+            style="background-color: rgb(224, 33, 122); margin-right: 5px;">LIKE</button>
+          <button mat-button class="btn btn-sm" style="background-color: rgb(42, 190, 87);">SHARE</button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </cdk-virtual-scroll-viewport>

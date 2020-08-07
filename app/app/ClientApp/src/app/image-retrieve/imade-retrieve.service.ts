@@ -11,7 +11,12 @@ export class ImageRetrieveService {
   constructor(private httpClient: HttpClient) { }
 
   public getImages(start: number, end: number, category?: number): Observable<ImageViewModel[]> {
-    let params = new HttpParams().set('start', start.toString()).set('end', end.toString()).set('category', category.toString());
+    let params =
+      new HttpParams()
+        .set('start', start.toString())
+        .set('end', end.toString())
+        .set('category', category.toString());
+
     return <Observable<ImageViewModel[]>>this.httpClient.get('https://localhost:5001/api/images/getImages', { params: params });
   }
 
