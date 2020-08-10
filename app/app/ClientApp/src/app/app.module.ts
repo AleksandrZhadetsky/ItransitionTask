@@ -17,6 +17,7 @@ import { ImageRetrieveComponent } from './image-retrieve/image-retrieve.componen
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { ImageDetailsComponent } from './details/image-details.component'
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
     NavMenuComponent,
     HomeComponent,
     UploadComponent,
-    ImageRetrieveComponent
+    ImageRetrieveComponent,
+    ImageDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'upload', component: UploadComponent, canActivate: [AuthorizeGuard] },
       { path: 'gallery', component: ImageRetrieveComponent },
+      { path: 'details/:id', component: ImageDetailsComponent }
     ]),
     BrowserAnimationsModule,
     ScrollingModule,

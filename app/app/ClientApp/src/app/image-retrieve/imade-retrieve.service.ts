@@ -10,6 +10,14 @@ import { ImageViewModel } from './ImageViewModel'
 export class ImageRetrieveService {
   constructor(private httpClient: HttpClient) { }
 
+  public getImage(id: string): Observable<ImageViewModel> {
+    let params =
+      new HttpParams()
+        .set('id', id);
+
+    return <Observable<ImageViewModel>>this.httpClient.get('https://localhost:5001/api/images/getImage', { params: params });
+  }
+
   public getImages(start: number, end: number, category?: number): Observable<ImageViewModel[]> {
     let params =
       new HttpParams()

@@ -25,9 +25,9 @@
       </mat-card-content>
       <mat-card-actions>
         <div class="button-container">
-          <button mat-button class="btn btn-sm" (click)="test()"
-            style="background-color: rgb(224, 33, 122); margin-right: 5px;">LIKE</button>
-          <button mat-button class="btn btn-sm" style="background-color: rgb(42, 190, 87);">SHARE</button>
+          <a mat-button class="btn btn-sm bg-info" routerLink="/details/{{item.id}}" style="margin-right: 5px;">Details</a>
+          <button mat-button class="btn btn-sm bg-danger" style=" margin-right: 5px;">LIKE</button>
+          <button mat-button class="btn btn-sm bg-success">SHARE</button>
         </div>
       </mat-card-actions>
     </mat-card>

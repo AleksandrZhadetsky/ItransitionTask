@@ -1,0 +1,25 @@
+<div class="image-container">
+    <div>
+        <label class="form-control bg-warning">Image</label>
+    </div>
+    <img class="img-thumbnail" src="{{image.path}}" alt="targetImage">
+</div>
+<div class="details-container">
+    <div>
+        <label class="form-control bg-warning">Owner</label>
+        <p>{{image.userId}}</p>
+    </div>
+    <div>
+        <label class="form-control bg-warning">Uploaded in</label>
+        <p>{{image.uploadDate}}</p>
+    </div>
+    <div>
+        <label class="form-control bg-warning">Category</label>
+        <p>{{category}}</p>
+    </div>
+</div>
+
+<a routerLink="/gallery" class="btn btn-outline-dark">
+    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+    Go back
+</a>

@@ -8,6 +8,7 @@ namespace app.services.Interfaces
 {
     public interface IImageRetrieveService
     {
+        Task<Image> GetImageAsync(Guid id);
         Task<IEnumerable<Image>> GetImagesAsync(int start, int end, Categories category);
         Task<IEnumerable<Image>> GetImagesByCategoryAsync(Categories category, int start, int end);
         Task<IEnumerable<Image>> GetImagesByUserAsync(string userId, int start, int end);

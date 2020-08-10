@@ -18,6 +18,11 @@ namespace app.services.Services
             _dbContext = dbContext;
         }
 
+        public async Task<Image> GetImageAsync(Guid id)
+        {
+            return await _dbContext.Images.Where(img => img.Id == id).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Image>> GetImagesAsync(int start, int end, Categories category)
         {
             return

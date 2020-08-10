@@ -22,6 +22,14 @@ namespace app.ClientApp
             _service = imageRetrieveService;
         }
 
+
+        [Route("getImage")]
+        [HttpGet]
+        public async Task<Image> GetImage([FromQuery] Guid id)
+        {
+            return await _service.GetImageAsync(id);
+        }
+
         [Route("getImages")]
         [HttpGet]
         public async Task<IEnumerable<Image>> GetImages([FromQuery] int start, int end, Categories category)
