@@ -11,17 +11,23 @@ using app.data_access.Data;
 using app.data_access.Models;
 using app.services.Interfaces;
 using app.services.Services;
+using app.services.Repositories;
+using System.Security.Claims;
+using System.Linq;
+using IdentityServer4.Models;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using System.Collections.Generic;
 
 namespace app
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -44,15 +50,25 @@ namespace app
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                //.AddInMemoryClients(Clients.Get())
+                //.AddInMemoryIdentityResources(Resources.GetIdentityResources())
+                //.AddInMemoryApiResources(Resources.GetApiResources())
+                //.AddDeveloperSigningCredential(); ;
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+            //.AddIdentityServerAuthentication("Bearer", options =>
+            //{
+            //    options.ApiName = "api";
+            //    options.Authority = "https://localhost:5001";
+            //});
 
             services.AddControllersWithViews();
 
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IDownloadService, DownloadService>();
             services.AddScoped<IImageRetrieveService, ImageRetrieveService>();
+            services.AddScoped<IImageRetrieveSqlRepository, ImageRetrieveSqlRepository>();
 
             services.AddRazorPages();
 
@@ -94,8 +110,9 @@ namespace app
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseIdentityServer();
             app.UseAuthorization();
+            app.UseIdentityServer();
+            ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

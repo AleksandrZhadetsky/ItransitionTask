@@ -38,21 +38,15 @@ namespace app.ClientApp
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Image>> GetImagesByCategory([FromQuery] Categories category, int start, int end)
+        public Task<IEnumerable<Image>> GetImagesByDate([FromQuery] DateTime date, int start, int end)
         {
-            return await _service.GetImagesByCategoryAsync(category, start, end);
+            throw new NotImplementedException();
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Image>> GetImagesByDate([FromQuery] DateTime date, int start, int end)
+        public Task<IEnumerable<Image>> GetImagesByUser([FromQuery] string userId, int start, int end)
         {
-            return await _service.GetImagesByDateAsync(date, start, end);
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<Image>> GetImagesByUser([FromQuery] string userId, int start, int end)
-        {
-            return await _service.GetImagesByUserAsync(userId, start, end);
+            throw new NotImplementedException();
         }
     }
 }

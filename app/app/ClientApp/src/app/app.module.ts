@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { ImageDetailsComponent } from './details/image-details.component'
+import { UserListComponent } from './user-list/user-list.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ImageDetailsComponent } from './details/image-details.component'
     HomeComponent,
     UploadComponent,
     ImageRetrieveComponent,
-    ImageDetailsComponent
+    ImageDetailsComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,6 +41,7 @@ import { ImageDetailsComponent } from './details/image-details.component'
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'upload', component: UploadComponent, canActivate: [AuthorizeGuard] },
       { path: 'gallery', component: ImageRetrieveComponent },
+      { path: 'user-list', component: UserListComponent },
       { path: 'details/:id', component: ImageDetailsComponent }
     ]),
     BrowserAnimationsModule,

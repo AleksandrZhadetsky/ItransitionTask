@@ -28,6 +28,12 @@ export class UploadComponent {
 
     constructor(private http: HttpClient, private authService: AuthorizeService) { }
 
+    test(){
+        this.authService.getCurrentUser().then(u => {
+            console.log(u);
+        })
+    }
+
     onFileSelected(event) {
         this.file = <File>event.target.files[0];
     }

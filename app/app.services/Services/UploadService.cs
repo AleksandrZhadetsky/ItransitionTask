@@ -1,6 +1,7 @@
 ﻿using app.data_access.Data;
 using app.data_access.Models;
 using app.services.Interfaces;
+using app.services.Repositories;
 using app.services.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,13 +15,13 @@ namespace app.services.Services
 {
     public class UploadService : IUploadService
     {
-        private ApplicationDbContext _dbContext;
+        private readonly IImageRetrieveSqlRepository _repository;
         private IWebHostEnvironment _hostingEnvironment;
 
-        public UploadService(IWebHostEnvironment hostingEnvironment, ApplicationDbContext dbContext)
+        public UploadService(IWebHostEnvironment hostingEnvironment, IImageRetrieveSqlRepository repository)
         {
             _hostingEnvironment = hostingEnvironment;
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public async Task HandleFileUploadAsync(UploadImageViewModel request)
@@ -46,8 +47,7 @@ namespace app.services.Services
                     Category = request.Category
                 };
 
-            _dbContext.Images.Add(dbImage);
-            await _dbContext.SaveChangesAsync();
+            await _repository.CreateAsync(dbImage);
         }
 
         public Task<ProcessImageResult> ProcessImageAsync(IFormFile source, FileStream outStream, ProcessImageSettings settings) =>

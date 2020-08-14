@@ -16,19 +16,10 @@
         <mat-card-title>{{item.uploadDate}}</mat-card-title>
         <mat-card-subtitle>by {{item.userId}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="{{item.path}}" alt="Photo">
+      <img mat-card-image src="{{item.path}}" routerLink="/details/{{item.id}}" alt="Photo">
       <mat-card-content>
-        <p>
-          Category: {{item.category}}
-          Number: {{i}}
-        </p>
       </mat-card-content>
       <mat-card-actions>
-        <div class="button-container">
-          <a mat-button class="btn btn-sm bg-info" routerLink="/details/{{item.id}}" style="margin-right: 5px;">Details</a>
-          <button mat-button class="btn btn-sm bg-danger" style=" margin-right: 5px;">LIKE</button>
-          <button mat-button class="btn btn-sm bg-success">SHARE</button>
-        </div>
       </mat-card-actions>
     </mat-card>
   </div>

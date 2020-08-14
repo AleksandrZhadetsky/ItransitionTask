@@ -55,7 +55,7 @@ export class AuthorizeService {
       this.userSubject.asObservable());
   }
 
-  public getCurrentUser(): Promise<User>{
+  public getCurrentUser(): Promise<User> {
     return this.userManager.getUser();
   }
 

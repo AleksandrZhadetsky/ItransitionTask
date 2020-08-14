@@ -10,7 +10,6 @@ namespace app.services.Interfaces
     {
         Task<Image> GetImageAsync(Guid id);
         Task<IEnumerable<Image>> GetImagesAsync(int start, int end, Categories category);
-        Task<IEnumerable<Image>> GetImagesByCategoryAsync(Categories category, int start, int end);
         Task<IEnumerable<Image>> GetImagesByUserAsync(string userId, int start, int end);
         Task<IEnumerable<Image>> GetImagesByDateAsync(DateTime date, int start, int end);
     }

@@ -11,68 +11,32 @@ namespace app.services.Services
 {
     public class ImageRetrieveService : IImageRetrieveService
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IImageRetrieveSqlRepository _repository;
 
-        public ImageRetrieveService(ApplicationDbContext dbContext)
+        public ImageRetrieveService(IImageRetrieveSqlRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public async Task<Image> GetImageAsync(Guid id)
         {
-            return await _dbContext.Images.Where(img => img.Id == id).FirstOrDefaultAsync();
+            return await _repository.GetItemAsync(id);
         }
 
         public async Task<IEnumerable<Image>> GetImagesAsync(int start, int end, Categories category)
         {
             return
-                (await _dbContext
-                .Images
-                .Where(img => category == Categories.All ? true : img.Category == category)
-                .Skip(start)
-                .Take(end - start)
-                .ToListAsync())
-                .Select(img =>
-                {
-                    img.Path = Constants.Constants.HostUrl + '/' + img.Path;
-                    return img;
-                });
+                await _repository.GetImagesAsync(start, end, category);
         }
 
-        public async Task<IEnumerable<Image>> GetImagesByCategoryAsync(Categories category, int start, int end)
+        public Task<IEnumerable<Image>> GetImagesByDateAsync(DateTime date, int start, int end)
         {
-            return
-                await _dbContext
-                .Images
-                .Where(img => img.Category == category)
-                .Skip(start)
-                .Take(end - start)
-                .ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Image>> GetImagesByDateAsync(DateTime date, int start, int end)
+        public Task<IEnumerable<Image>> GetImagesByUserAsync(string userId, int start, int end)
         {
-            return
-                await _dbContext
-                .Images
-                .Where(img =>
-                img.UploadDate.Year == date.Year &&
-                img.UploadDate.Month == date.Month &&
-                img.UploadDate.Day == date.Day)
-                .Skip(start)
-                .Take(end - start)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Image>> GetImagesByUserAsync(string userId, int start, int end)
-        {
-            return
-                await _dbContext
-                .Images
-                .Where(img => img.UserId == userId)
-                .Skip(start)
-                .Take(end - start)
-                .ToListAsync();
+            throw new NotImplementedException();
         }
     }
 }
