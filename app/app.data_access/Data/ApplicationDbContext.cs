@@ -2,6 +2,7 @@
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,29 +13,36 @@ using System.Threading.Tasks;
 
 namespace app.data_access.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(
-            DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+
         }
 
         public DbSet<Image> Images { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
         public static async Task CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-            string username = configuration["Data:AdminUser:Name"];
-            string email = configuration["Data:AdminUser:Email"];
-            string password = configuration["Data:AdminUser:Password"];
-
-            string roleName = configuration["Data:AdminRole:Name"];
-            string roleValue = configuration["Data:AdminRole:Value"];
+            RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            string username = configuration["AdminUser:Name"];
+            string email = configuration["AdminUser:Email"];
+            string password = configuration["AdminUser:Password"];
+            string role = configuration["AdminUser:Role"];
 
             if (await userManager.FindByNameAsync(username) == null)
             {
+                if (await roleManager.FindByNameAsync(role) == null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+
                 ApplicationUser user = new ApplicationUser
                 {
                     UserName = username,
@@ -45,7 +53,7 @@ namespace app.data_access.Data
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddClaimAsync(user, new Claim(roleName, roleValue));
+                    await userManager.AddToRoleAsync(user, role);
                 }
             }
         }

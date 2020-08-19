@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
-import { AuthorizeService } from 'src/api-authorization/authorize.service';
+import { AuthenticationService } from '../shared/authentication/authentication.service';
 import { User } from 'oidc-client';
 
 @Component({
@@ -26,12 +26,12 @@ export class UploadComponent {
         { key: "Other", value: 9 }
     ];
 
-    constructor(private http: HttpClient, private authService: AuthorizeService) { }
+    constructor(private http: HttpClient, private authService: AuthenticationService) { }
 
     test(){
-        this.authService.getCurrentUser().then(u => {
-            console.log(u);
-        })
+        // this.authService.getCurrentUser().then(u => {
+        //     console.log(u);
+        // })
     }
 
     onFileSelected(event) {
@@ -39,19 +39,19 @@ export class UploadComponent {
     }
 
     onUpload() {
-        const formdata = new FormData();
-        this.authService.getCurrentUser().then(u => {
-            this.user = u;
-        })
+        // const formdata = new FormData();
+        // this.authService.getCurrentUser().then(u => {
+        //     this.user = u;
+        // })
         
-        formdata.append('UploadedFile', this.file, this.file.name);
-        formdata.append('Category', this.category.toString());
-        formdata.append('UserId', this.user.profile.sub);
+        // formdata.append('UploadedFile', this.file, this.file.name);
+        // formdata.append('Category', this.category.toString());
+        // formdata.append('UserId', this.user.profile.sub);
 
-        this.http.post('api/upload', formdata)
-            .subscribe(response => {
-                this.response = response;
-            });
+        // this.http.post('api/upload', formdata)
+        //     .subscribe(response => {
+        //         this.response = response;
+        //     });
     }
 }
 

@@ -17,6 +17,10 @@ using System.Linq;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace app
 {
@@ -31,108 +35,75 @@ namespace app
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddCors();
+            services.AddControllers();
 
-            services
-                .AddDefaultIdentity<ApplicationUser>(options =>
+            // For Entity Framework
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // For Identity
+            services.AddIdentity<ApplicationUser, IdentityRole>(
+                options =>
                 {
-                    options.SignIn.RequireConfirmedAccount = false;
-                    options.User.RequireUniqueEmail = true;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
                     options.Password.RequiredLength = 6;
                     options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = false;
-                    options.Password.RequireDigit = false;
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-                //.AddInMemoryClients(Clients.Get())
-                //.AddInMemoryIdentityResources(Resources.GetIdentityResources())
-                //.AddInMemoryApiResources(Resources.GetApiResources())
-                //.AddDeveloperSigningCredential(); ;
+            // Adding Authentication
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
-            //.AddIdentityServerAuthentication("Bearer", options =>
-            //{
-            //    options.ApiName = "api";
-            //    options.Authority = "https://localhost:5001";
-            //});
-
-            services.AddControllersWithViews();
+            // Adding Jwt Bearer
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
+            //services.AddControllersWithViews();
 
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IDownloadService, DownloadService>();
             services.AddScoped<IImageRetrieveService, ImageRetrieveService>();
             services.AddScoped<IImageRetrieveSqlRepository, ImageRetrieveSqlRepository>();
-
-            services.AddRazorPages();
-
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
-
-            services.Configure<FormOptions>(o =>
-            {
-                o.ValueLengthLimit = int.MaxValue;
-                o.MultipartBodyLengthLimit = int.MaxValue;
-                o.MemoryBufferThreshold = int.MaxValue;
-            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
             app.UseRouting();
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseIdentityServer();
-            ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
+            ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
 
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
         }
     }
 }
