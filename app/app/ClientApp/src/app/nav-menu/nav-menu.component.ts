@@ -9,9 +9,12 @@ import { AuthenticationService } from '../shared';
 export class NavMenuComponent {
   isExpanded = false;
   isAuthorized: boolean;
+  isAdmin: boolean;
 
   constructor(private _authService: AuthenticationService){
     this.isAuthorized = _authService.userValue && _authService.userValue.token;
+    let role = _authService.userValue == null ? null : _authService.userValue.role;
+    this.isAdmin = role == null ? false : role == "admin";
   }
 
   collapse() {

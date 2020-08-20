@@ -24,7 +24,7 @@ export class AuthenticationService implements AuthService {
     private tokenStorage: TokenStorage
   ) {
     this.userSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('user')));
-    
+
     this.user = this.userSubject.asObservable();
   }
 
