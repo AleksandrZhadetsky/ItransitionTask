@@ -1,10 +1,7 @@
-﻿using app.data_access.Data;
-using app.data_access.Models;
+﻿using app.data_access.Models;
 using app.services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace app.services.Services

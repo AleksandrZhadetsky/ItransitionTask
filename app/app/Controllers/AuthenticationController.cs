@@ -5,12 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using app.Authentication;
 using app.data_access.Models;
-using Microsoft.AspNetCore.Http;
+using app.services.Interfaces;
+using app.services.Services;
+using app.services.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -22,13 +22,15 @@ namespace app.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IUserRetrieveService _service;
         private readonly IConfiguration _configuration;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, IUserRetrieveService service)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             _configuration = configuration;
+            _service = service;
         }
 
         [HttpPost]
@@ -39,32 +41,9 @@ namespace app.Controllers
 
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
             {
-                var userRoles = await userManager.GetRolesAsync(user);
+                user.Token = await GenerateTokenAsync(user, model.Password);
 
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.Id),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-
-                foreach (var userRole in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-                }
-
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
-                var token = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
-
-                user.Token = new JwtSecurityTokenHandler().WriteToken(token);
-
-                return Ok(new { token = user.Token });
+                return Ok(user);
             }
             return Unauthorized();
         }
@@ -73,27 +52,36 @@ namespace app.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userExists = await userManager.Users.Where(user => user.UserName == model.Username).AnyAsync();
+            await _service.CreateUserAsync(model);
+            return Ok("User created successfully!");
+        }
 
-            if (userExists)
+        private async Task<string> GenerateTokenAsync(ApplicationUser user, string password)
+        {
+            var userRoles = await userManager.GetRolesAsync(user);
+            user.Role = userRoles.Any() ? userRoles.First() : null;
+            var authClaims = new List<Claim>
             {
-                return BadRequest("User already exists!");
-            }
-
-            ApplicationUser user = new ApplicationUser()
-            {
-                Email = model.Email,
-                UserName = model.Username
+                new Claim(ClaimTypes.Name, user.Id),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            var result = await userManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
+            foreach (var userRole in userRoles)
             {
-                return BadRequest("User creation failed! Please check user details and try again.");
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
             }
-            
-            return Ok("User created successfully!");
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddHours(3),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

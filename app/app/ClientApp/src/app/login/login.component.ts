@@ -20,7 +20,7 @@ public password = "";
   public login() {
     this.authService
       .login(this.username, this.password)
-      .subscribe(response => console.log(response));
+      .subscribe(_ => {});
   }
 
 }

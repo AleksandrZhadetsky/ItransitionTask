@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace app.data_access.Models
 {

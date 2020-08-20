@@ -1,22 +1,13 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Http.Features;
 using app.data_access.Data;
 using app.data_access.Models;
 using app.services.Interfaces;
 using app.services.Services;
 using app.services.Repositories;
-using System.Security.Claims;
-using System.Linq;
-using IdentityServer4.Models;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -81,12 +72,15 @@ namespace app
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IDownloadService, DownloadService>();
             services.AddScoped<IImageRetrieveService, ImageRetrieveService>();
+            services.AddScoped<IUserRetrieveService, UserRetrieveService>();
             services.AddScoped<IImageRetrieveSqlRepository, ImageRetrieveSqlRepository>();
+            services.AddScoped<IUserRetrieveSqlRepository, UserRetrieveSqlRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+            app.UseStaticFiles();
 
             // global cors policy
             app.UseCors(x => x
@@ -103,7 +97,6 @@ namespace app
             });
 
             ApplicationDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-
         }
     }
 }

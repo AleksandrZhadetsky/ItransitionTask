@@ -1,12 +1,10 @@
 ﻿using app.data_access.Data;
 using app.data_access.Models;
 using app.services.Interfaces;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace app.services.Repositories
@@ -60,7 +58,10 @@ namespace app.services.Repositories
 
         public async Task<Image> GetItemAsync(Guid id)
         {
-            return await _context.Images.Where(img => img.Id == id).FirstOrDefaultAsync();
+            var image = await _context.Images.Where(img => img.Id == id).FirstOrDefaultAsync();
+            image.Path = Constants.Constants.HostUrl + '/' + image.Path;
+
+            return image;
         }
 
         public async Task<Image> UpdateAsync(Image item)

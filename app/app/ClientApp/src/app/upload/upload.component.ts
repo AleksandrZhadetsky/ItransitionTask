@@ -8,11 +8,15 @@ import { User } from 'oidc-client';
     templateUrl: './upload.component.html',
 })
 export class UploadComponent {
+
+    public readonly ApiUrl = 'http://localhost:61955';
+
     public response: object;
     public message: string;
     public file: File = null;
-    public user : User;
+    public user: any;
     public category = { key: "", value: 0 };
+
     public categories = [
         { key: "Scientific", value: 0 },
         { key: "Personal", value: 1 },
@@ -26,12 +30,8 @@ export class UploadComponent {
         { key: "Other", value: 9 }
     ];
 
-    constructor(private http: HttpClient, private authService: AuthenticationService) { }
-
-    test(){
-        // this.authService.getCurrentUser().then(u => {
-        //     console.log(u);
-        // })
+    constructor(private http: HttpClient, private authService: AuthenticationService) {
+        this.user = authService.userValue;
     }
 
     onFileSelected(event) {
@@ -39,19 +39,16 @@ export class UploadComponent {
     }
 
     onUpload() {
-        // const formdata = new FormData();
-        // this.authService.getCurrentUser().then(u => {
-        //     this.user = u;
-        // })
-        
-        // formdata.append('UploadedFile', this.file, this.file.name);
-        // formdata.append('Category', this.category.toString());
-        // formdata.append('UserId', this.user.profile.sub);
+        const formdata = new FormData();
+        let userId = this.user.id
+        formdata.append('UploadedFile', this.file, this.file.name);
+        formdata.append('Category', this.category.toString());
+        formdata.append('UserId', userId);
 
-        // this.http.post('api/upload', formdata)
-        //     .subscribe(response => {
-        //         this.response = response;
-        //     });
+        this.http.post(`${this.ApiUrl}/api/upload`, formdata)
+            .subscribe(response => {
+                this.response = response;
+            });
     }
 }
 

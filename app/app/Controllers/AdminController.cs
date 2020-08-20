@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using app.Authentication;
-using app.data_access.Data;
 using app.data_access.Models;
+using app.services.Interfaces;
+using app.services.Services;
+using app.services.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,25 +20,34 @@ namespace app.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUserRetrieveService _service;
 
-        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUserRetrieveService service)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _service = service;
         }
 
         [Route("getUser")]
         [HttpGet]
-        public async Task<ApplicationUser> GetUserById([FromRoute]string id)
+        public Task<ApplicationUser> GetUserById([FromRoute]string id)
         {
-            return await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+            return _service.GetUserAsync(id);
+        }
+
+        [Route("getUsers")]
+        [HttpGet]
+        public async Task<IEnumerable<ApplicationUser>> GetUsers()
+        {
+            return await _service.GetUsersAsync();
         }
 
         [Route("createAdminAccount")]
         [HttpPost]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
+            var userExists = await _userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
             {
                 return BadRequest("User already exists!");
@@ -48,8 +56,7 @@ namespace app.Controllers
             ApplicationUser user = new ApplicationUser()
             {
                 Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
+                UserName = model.UserName
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -59,14 +66,14 @@ namespace app.Controllers
                 return BadRequest("User creation failed! Please check user details and try again.");
             }
 
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (!await _roleManager.RoleExistsAsync("admin"))
             {
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                await _roleManager.CreateAsync(new IdentityRole("admin"));
             }
 
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (await _roleManager.RoleExistsAsync("admin"))
             {
-                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
+                await _userManager.AddToRoleAsync(user, "admin");
             }
 
             return Ok("User created successfully!");

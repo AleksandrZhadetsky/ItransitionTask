@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AuthenticationModule } from './shared';
+import { AuthenticationModule, AuthenticationService, DataService } from './shared';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component'
@@ -17,6 +17,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FormsModule } from '@angular/forms';
 import { UserListComponent } from './user-list/user-list.component';
+import { AuthRoleGuardService } from './shared/authentication/auth-role-guard';
+import { AuthGuardService } from './shared/authentication/auth-guard';
+import { JwtInterceptor } from './shared/authentication/jwt.interceptor';
+import { ImageDetailsComponent } from './details/image-details.component';
 
 @NgModule({
   imports: [
@@ -37,10 +41,18 @@ import { UserListComponent } from './user-list/user-list.component';
     NavMenuComponent,
     ImageRetrieveComponent,
     UploadComponent,
-    UserListComponent
+    UserListComponent,
+    ImageDetailsComponent
   ],
   bootstrap: [
     AppComponent
+  ],
+  providers:[
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    AuthRoleGuardService,
+    AuthGuardService,
+    AuthenticationService,
+    DataService
   ]
 })
 export class AppModule { }

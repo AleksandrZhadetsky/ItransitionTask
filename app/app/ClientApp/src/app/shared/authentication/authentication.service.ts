@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, catchError } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
+import { User } from './User';
 
 import { TokenStorage } from './token-storage.service';
 
@@ -15,11 +16,21 @@ interface AccessData {
 export class AuthenticationService implements AuthService {
 
   public readonly ApiUrl = 'http://localhost:61955';
+  private userSubject: BehaviorSubject<any>;
+  public user: Observable<any>;
 
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorage
-  ) { }
+  ) {
+    this.userSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('user')));
+    
+    this.user = this.userSubject.asObservable();
+  }
+
+  public get userValue(): any {
+    return this.userSubject.value;
+  }
 
   public isAuthorized(): Observable<boolean> {
     return this.tokenStorage
@@ -58,17 +69,22 @@ export class AuthenticationService implements AuthService {
   public login(_username: string, _password: string): Observable<any> {
     return this.http
       .post(`${this.ApiUrl}/api/authentication/login`, { username: _username, password: _password })
-      .pipe(tap((token) => {this.saveAccessData(token.token); console.log(token.token)}));
+      .pipe(tap((user) => {
+        this.saveAccessData(user.token);
+        localStorage.setItem("user", JSON.stringify(user));
+        this.userSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('user'))); // test row
+      }));
   }
 
   public logout(): void {
     this.tokenStorage.clear();
+    localStorage.removeItem("user");
     location.reload(true);
+    this.userSubject.next(null); // test row
   }
 
   private saveAccessData(accessToken) {
     this.tokenStorage
       .setAccessToken(accessToken);
   }
-
 }

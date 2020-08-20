@@ -8,6 +8,9 @@ import { ImageViewModel } from './ImageViewModel'
 })
 
 export class ImageRetrieveService {
+
+  public readonly ApiUrl = 'http://localhost:61955';
+
   constructor(private httpClient: HttpClient) { }
 
   public getImage(id: string): Observable<ImageViewModel> {
@@ -15,7 +18,7 @@ export class ImageRetrieveService {
       new HttpParams()
         .set('id', id);
 
-    return <Observable<ImageViewModel>>this.httpClient.get('https://localhost:5001/api/images/getImage', { params: params });
+    return <Observable<ImageViewModel>>this.httpClient.get(`${this.ApiUrl}/api/images/getImage`, { params: params });
   }
 
   public getImages(start: number, end: number, category?: number): Observable<ImageViewModel[]> {
@@ -25,6 +28,6 @@ export class ImageRetrieveService {
         .set('end', end.toString())
         .set('category', category.toString());
 
-    return <Observable<ImageViewModel[]>>this.httpClient.get('https://localhost:5001/api/images/getImages', { params: params });
+    return <Observable<ImageViewModel[]>>this.httpClient.get(`${this.ApiUrl}/api/images/getImages`, { params: params });
   }
 }

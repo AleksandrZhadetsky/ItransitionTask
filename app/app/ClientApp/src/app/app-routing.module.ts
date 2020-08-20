@@ -7,6 +7,10 @@ import { LoginComponent } from './login/login.component';
 import { ImageRetrieveComponent } from './image-retrieve/image-retrieve.component';
 import { UploadComponent } from './upload/upload.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { ImageDetailsComponent } from './details/image-details.component';
+import { AuthGuardService as AuthGuard } from './shared/authentication/auth-guard'
+import { AuthRoleGuardService as AuthRoleGuard } from './shared/authentication/auth-role-guard'
+
 
 const routes: Routes = [
   {
@@ -21,21 +25,29 @@ const routes: Routes = [
   // },
   {
     path: 'user-list',
-    // canActivate: [ PublicGuard ],
+    canActivate: [ AuthRoleGuard ],
     component: UserListComponent
   },
   {
     path: 'gallery',
-    canActivate: [ PublicGuard ],
     component: ImageRetrieveComponent
   },
   {
+    path: 'details/:id',
+    component: ImageDetailsComponent
+  },
+  {
     path: 'upload',
-    canActivate: [ PublicGuard ],
+    canActivate: [ AuthGuard ],
     component: UploadComponent
   },
   {
     path: '',
+    component: HomeComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
     component: HomeComponent,
     pathMatch: 'full'
   }

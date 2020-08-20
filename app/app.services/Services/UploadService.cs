@@ -1,7 +1,5 @@
-﻿using app.data_access.Data;
-using app.data_access.Models;
+﻿using app.data_access.Models;
 using app.services.Interfaces;
-using app.services.Repositories;
 using app.services.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
