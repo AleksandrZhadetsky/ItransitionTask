@@ -52,7 +52,14 @@ namespace app.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            await _service.CreateUserAsync(model);
+            try
+            {
+                await _service.CreateUserAsync(model);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok("User created successfully!");
         }
 
