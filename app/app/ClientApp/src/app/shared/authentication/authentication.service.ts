@@ -76,11 +76,19 @@ export class AuthenticationService implements AuthService {
       }));
   }
 
+  public register(_username: string, _email:string, _password: string): Observable<any> {
+    return this.http
+      .post(`${this.ApiUrl}/api/authentication/register`, { username: _username, email: _email, password: _password })
+      .pipe(tap((response) => {
+        console.log(response);
+      }));
+  }
+
   public logout(): void {
     this.tokenStorage.clear();
     localStorage.removeItem("user");
-    location.reload(true);
     this.userSubject.next(null); // test row
+    location.reload(true);
   }
 
   private saveAccessData(accessToken) {

@@ -21,6 +21,7 @@ import { AuthRoleGuardService } from './shared/authentication/auth-role-guard';
 import { AuthGuardService } from './shared/authentication/auth-guard';
 import { JwtInterceptor } from './shared/authentication/jwt.interceptor';
 import { ImageDetailsComponent } from './details/image-details.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { ImageDetailsComponent } from './details/image-details.component';
     ImageRetrieveComponent,
     UploadComponent,
     UserListComponent,
-    ImageDetailsComponent
+    ImageDetailsComponent,
+    RegisterComponent
   ],
   bootstrap: [
     AppComponent

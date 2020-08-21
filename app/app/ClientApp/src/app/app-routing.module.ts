@@ -10,19 +10,17 @@ import { UserListComponent } from './user-list/user-list.component';
 import { ImageDetailsComponent } from './details/image-details.component';
 import { AuthGuardService as AuthGuard } from './shared/authentication/auth-guard'
 import { AuthRoleGuardService as AuthRoleGuard } from './shared/authentication/auth-role-guard'
-
+import { RegisterComponent } from './register/register.component'
 
 const routes: Routes = [
   {
     path: 'login',
-    // canActivate: [ PublicGuard ],
     component: LoginComponent
   },
-  // {
-  //   path: 'register',
-  //   canActivate: [ PublicGuard ],
-  //   component: RegisterModule
-  // },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
   {
     path: 'user-list',
     canActivate: [ AuthRoleGuard ],
